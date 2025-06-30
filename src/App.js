@@ -1,28 +1,35 @@
-// src/App.test.js
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Pastikan ini ada di sini atau di setupTests.js
+    import React from 'react';
 
-import App from './App';
+    // Komponen utama aplikasi
+    const App = () => {
+      // Ganti dengan NIM dan Nama Anda yang sebenarnya
+      const nim = "2406159"; // Contoh: "123456789"
+      const nama = "Muhamad Aenun Rizky"; // Contoh: "Budi Santoso"
 
-test('renders Halo UAS PKPL! text', () => {
-  render(<App />);
-  const titleElement = screen.getByText(/Halo UAS PKPL!/i);
-  expect(titleElement).toBeInTheDocument();
-});
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-sm w-full">
+            <h1 className="text-4xl font-extrabold text-blue-600 mb-4 animate-bounce">
+              Halo UAS PKPL!
+            </h1>
+            <p className="text-lg text-gray-800 mb-2">
+              Selamat datang di aplikasi web sederhana untuk tugas UAS PKPL Anda.
+            </p>
+            <div className="mt-6 p-4 bg-blue-50 rounded-md border border-blue-200">
+              <p className="text-md text-gray-700 font-semibold">
+                NIM: <span className="font-bold text-blue-700">{nim}</span>
+              </p>
+              <p className="text-md text-gray-700 font-semibold">
+                Nama: <span className="font-bold text-blue-700">{nama}</span>
+              </p>
+            </div>
+            <p className="mt-6 text-sm text-gray-600">
+              Semoga sukses dengan ujian Anda!
+            </p>
+          </div>
+        </div>
+      );
+    };
 
-test('menampilkan NIM dan Nama yang benar', () => { // Ganti nama tes agar lebih jelas
-  render(<App />);
-
-  // Ganti dengan NIM dan Nama Anda yang sebenarnya
-  const nim = "2406159"; // Masukkan NIM Anda yang sebenarnya
-  const nama = "Muhamad Aenun Rizky"; // Masukkan Nama Anda yang sebenarnya
-
-  // Cari elemen yang berisi NIM dan Nama Anda
-  // Gunakan regex yang lebih fleksibel atau getByText dengan teks lengkap
-  expect(screen.getByText(nim)).toBeInTheDocument();
-  expect(screen.getByText(nama)).toBeInTheDocument();
-
-  // Anda juga bisa mencari elemen yang berisi kombinasi teks "NIM: [NIM Anda]"
-  // expect(screen.getByText(/NIM: 2406159/i)).toBeInTheDocument();
-  // expect(screen.getByText(/Nama: Muhamad Aenun Rizky/i)).toBeInTheDocument();
-});
+    export default App;
+    
