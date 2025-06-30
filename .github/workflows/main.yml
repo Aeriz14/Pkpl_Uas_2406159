@@ -29,13 +29,16 @@ jobs:
       # Jalankan unit test. build akan gagal jika tes tidak lulus
       run: npm test -- --coverage --watchAll=false
 
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
     - name: Build and Push Docker Image
-      # Gunakan action Docker untuk membangun dan mendorong image
       uses: docker/build-push-action@v4
       with:
         context: . # Konteks build adalah direktori saat ini
         push: true # Aktifkan push ke registry Docker
         tags: ${{ secrets.DOCKER_USERNAME }}/uas-pkpl-app:latest # Tag image dengan username Docker Hub dan nama aplikasi
         file: ./Dockerfile # Lokasi Dockerfile
-        username: ${{ secrets.DOCKER_USERNAME }} # Mengambil username Docker dari GitHub Secrets
-        password: ${{ secrets.DOCKER_PASSWORD }} # Mengambil password Docker dari GitHub Secrets
