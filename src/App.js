@@ -1,29 +1,28 @@
-import React from "react";
+// src/App.test.js
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'; // Pastikan ini ada di sini atau di setupTests.js
 
-// Komponen utama aplikasi
-const App = () => {
-  // Placeholder NIM dan Nama, silakan ganti dengan data Anda
-  const nim = "2406159";
-  const nama = "Muhamad Aenun Rizky";
+import App from './App';
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-blue-50 border border-blue-200 p-8 rounded-lg shadow-lg text-center">
-        {/* Judul aplikasi */}
-        <h1 className="text-4xl font-extrabold text-blue-600 animate-bounce mb-4">
-          Halo UAS PKPL!
-        </h1>
-        {/* NIM */}
-        <p className="text-lg font-semibold text-blue-700 mb-2">
-          NIM: <span className="text-gray-800">{nim}</span>
-        </p>
-        {/* Nama Lengkap */}
-        <p className="text-sm text-gray-600">
-          Nama: <span className="text-gray-800">{nama}</span>
-        </p>
-      </div>
-    </div>
-  );
-};
+test('renders Halo UAS PKPL! text', () => {
+  render(<App />);
+  const titleElement = screen.getByText(/Halo UAS PKPL!/i);
+  expect(titleElement).toBeInTheDocument();
+});
 
-export default App;
+test('menampilkan NIM dan Nama yang benar', () => { // Ganti nama tes agar lebih jelas
+  render(<App />);
+
+  // Ganti dengan NIM dan Nama Anda yang sebenarnya
+  const nim = "2406159"; // Masukkan NIM Anda yang sebenarnya
+  const nama = "Muhamad Aenun Rizky"; // Masukkan Nama Anda yang sebenarnya
+
+  // Cari elemen yang berisi NIM dan Nama Anda
+  // Gunakan regex yang lebih fleksibel atau getByText dengan teks lengkap
+  expect(screen.getByText(nim)).toBeInTheDocument();
+  expect(screen.getByText(nama)).toBeInTheDocument();
+
+  // Anda juga bisa mencari elemen yang berisi kombinasi teks "NIM: [NIM Anda]"
+  // expect(screen.getByText(/NIM: 2406159/i)).toBeInTheDocument();
+  // expect(screen.getByText(/Nama: Muhamad Aenun Rizky/i)).toBeInTheDocument();
+});
