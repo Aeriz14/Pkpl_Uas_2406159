@@ -1,0 +1,41 @@
+# .github/workflows/main.yml
+name: CI/CD Pipeline for PKPL UAS App
+
+on:
+  push:
+    branches:
+      - main # Jalankan workflow ini saat ada push ke branch main
+  pull_request:
+    branches:
+      - main # Jalankan workflow ini saat ada pull request ke branch main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest # Jalankan job di lingkungan Ubuntu terbaru
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3 # Checkout kode dari repositori
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3 # Siapkan Node.js
+      with:
+        node-version: '18' # Gunakan Node.js versi 18
+
+    - name: Install dependencies
+      run: npm install # Instal semua dependensi proyek
+
+    - name: Run Unit Tests
+      # Jalankan unit test. build akan gagal jika tes tidak lulus
+      run: npm test -- --coverage --watchAll=false
+
+    - name: Build and Push Docker Image
+      # Gunakan action Docker untuk membangun dan mendorong image
+      uses: docker/build-push-action@v4
+      with:
+        context: . # Konteks build adalah direktori saat ini
+        push: true # Aktifkan push ke registry Docker
+        tags: ${{ secrets.DOCKER_USERNAME }}/uas-pkpl-app:latest # Tag image dengan username Docker Hub dan nama aplikasi
+        file: ./Dockerfile # Lokasi Dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }} # Mengambil username Docker dari GitHub Secrets
+        password: ${{ secrets.DOCKER_PASSWORD }} # Mengambil password Docker dari GitHub Secrets
